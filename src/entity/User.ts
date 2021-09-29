@@ -6,7 +6,7 @@ import {
   BeforeInsert,
 } from 'typeorm';
 
-import {genSalt, hash} from 'bcrypt'
+import { genSalt, hash } from 'bcrypt';
 
 @Entity()
 export class User extends BaseEntity {
@@ -38,10 +38,11 @@ export class User extends BaseEntity {
   async hashPassword() {
     this.createdAt = new Date();
     this.updatedAt = new Date();
-    
-    const salt = await genSalt(Math.floor(Math.random() * 10))
-    const hashPassword = await hash(this.password, salt)
 
-    this.password = hashPassword
+    const salt = await genSalt(Math.floor(Math.random() * 10));
+    const hashPassword = await hash(this.password, salt);
+
+    this.password = hashPassword;
   }
+
 }
