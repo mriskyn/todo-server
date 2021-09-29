@@ -13,8 +13,8 @@ if (process.env.TS_NODE_DEV) {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
-    entities: ['src/entity/*{.ts,.js}'],
-    synchronize: false,
+    entities: [__dirname.replace('database', '') + '/entity/*{.ts,.js}'],
+    synchronize: true,
   };
 } else {
   config = {
