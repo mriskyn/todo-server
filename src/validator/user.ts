@@ -23,4 +23,11 @@ function checkRegister() {
   ];
 }
 
-export { checkRegister };
+function checkLogin(){
+  return [
+    body('username').isLength({min: 1}).withMessage('Username is Empty'),
+    body('password').isLength({min: 1}).withMessage('Password is Empty'),
+  ]
+}
+
+export { checkRegister, checkLogin };
