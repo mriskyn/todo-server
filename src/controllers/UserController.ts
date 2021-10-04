@@ -1,6 +1,9 @@
-import { compare, compareSync } from 'bcrypt';
+import { compareSync } from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { User } from '../entity/User';
+
+const SECRET_KEY = process.env.SECRET_KEY;
 
 async function register(req: Request, res: Response): Promise<Response> {
   const inputs = req.body;
@@ -35,8 +38,11 @@ async function login(req: Request, res: Response): Promise<Response> {
     }
 
     delete user.password;
-    
-    return res.json(user);
+
+    const { ...payload } = user;
+
+    const token = jwt.sign({ payload }, SECRET_KEY);
+    return res.json({ token });
   } catch (error) {
     return res.status(500).json(error);
   }
