@@ -1,6 +1,14 @@
 import { Request, Response } from 'express';
 import { Task } from '../entity/Task';
 
+declare global {
+  namespace Express {
+    interface Request {
+      user?: any;
+    }
+  }
+}
+
 async function readTasks(req: Request, res: Response): Promise<Response> {
   try {
     const tasks = await Task.find();
@@ -22,8 +30,9 @@ async function readTask(req: Request, res: Response): Promise<Response> {
 
 async function createTask(req: Request, res: Response): Promise<Response> {
   const inputs = req.body;
+  const userId = req.user.payload.id;
 
-  const task = Task.create(inputs);
+  const task = Task.create({ ...inputs, user: userId });
 
   try {
     await Task.save(task);
@@ -49,8 +58,8 @@ async function deleteTask(req: Request, res: Response): Promise<Response> {
   const { id } = req.params;
 
   try {
-    const deletedTask = await Task.delete({id: parseInt(id)});
-    return res.json(deletedTask)
+    const deletedTask = await Task.delete({ id: parseInt(id) });
+    return res.json(deletedTask);
   } catch (err) {
     return res.json({ err });
   }
