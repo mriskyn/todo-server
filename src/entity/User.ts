@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   BeforeInsert,
+  OneToMany,
 } from 'typeorm';
+import { Task } from './Task';
 
 import { genSalt, hash } from 'bcrypt';
 
@@ -34,6 +36,9 @@ export class User extends BaseEntity {
   @Column()
   updatedAt: Date;
 
+  @OneToMany(() => Task, (task) => task.user)
+  tasks: Task[];
+
   @BeforeInsert()
   async hashPassword() {
     this.createdAt = new Date();
@@ -44,5 +49,4 @@ export class User extends BaseEntity {
 
     this.password = hashPassword;
   }
-
 }
