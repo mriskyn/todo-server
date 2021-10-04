@@ -16,9 +16,9 @@ const router = express.Router();
 router.post('/register', checkRegister(), handleValidationError, register);
 router.post('/login', checkLogin(), handleValidationError, login);
 
+router.get('/task', readTasks);
 router.use(authorization);
 router.post('/task', createTask);
-router.get('/task', readTasks);
 router.get('/task/:id', readTask);
 router.patch('/task/:id', updateTask);
 router.delete('/task/:id', deleteTask);
