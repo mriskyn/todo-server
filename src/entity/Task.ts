@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   BaseEntity,
   BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
 
 @Entity()
@@ -29,5 +30,10 @@ export class Task extends BaseEntity {
     this.updatedAt = new Date();
     
     this.isCompleted = false;
+  }
+
+  @BeforeUpdate()
+  async updateTime() {
+    this.updatedAt = new Date();
   }
 }
