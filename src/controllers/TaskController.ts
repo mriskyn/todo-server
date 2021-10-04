@@ -20,6 +20,11 @@ async function readTasks(req: Request, res: Response): Promise<Response> {
 
 async function readTask(req: Request, res: Response): Promise<Response> {
   const { id } = req.params;
+
+  if (!Number(id)) {
+    return res.status(400).json({ msg: 'Wrong id Parameter' });
+  }
+  
   try {
     const task = await Task.findByIds([id]);
     return res.json(task);
@@ -46,6 +51,10 @@ async function updateTask(req: Request, res: Response): Promise<Response> {
   const { id } = req.params;
   const inputs = req.body;
 
+  if (!Number(id)) {
+    return res.status(400).json({ msg: 'Wrong id Parameter' });
+  }
+
   try {
     const updatedTask = await Task.update({ id: parseInt(id) }, inputs);
     return res.json(updatedTask);
@@ -56,6 +65,10 @@ async function updateTask(req: Request, res: Response): Promise<Response> {
 
 async function deleteTask(req: Request, res: Response): Promise<Response> {
   const { id } = req.params;
+
+  if (!Number(id)) {
+    return res.status(400).json({ msg: 'Wrong id Parameter' });
+  }
 
   try {
     const deletedTask = await Task.delete({ id: parseInt(id) });
