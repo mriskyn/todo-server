@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BaseEntity,
+  BeforeInsert,
+} from 'typeorm';
 
 @Entity()
 export class Task extends BaseEntity {
@@ -16,4 +22,12 @@ export class Task extends BaseEntity {
 
   @Column()
   updatedAt: Date;
+
+  @BeforeInsert()
+  initiateDate() {
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
+    
+    this.isCompleted = false;
+  }
 }
