@@ -46,7 +46,14 @@ async function updateTask(req: Request, res: Response): Promise<Response> {
 }
 
 async function deleteTask(req: Request, res: Response): Promise<Response> {
-  return res.json('delete');
+  const { id } = req.params;
+
+  try {
+    const deletedTask = await Task.delete({id: parseInt(id)});
+    return res.json(deletedTask)
+  } catch (err) {
+    return res.json({ err });
+  }
 }
 
 export { readTasks, createTask, updateTask, deleteTask, readTask };
