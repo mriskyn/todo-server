@@ -5,7 +5,10 @@ import {
   BaseEntity,
   BeforeInsert,
   BeforeUpdate,
+  ManyToOne,
 } from 'typeorm';
+import {User} from "./User";
+
 
 @Entity()
 export class Task extends BaseEntity {
@@ -23,6 +26,9 @@ export class Task extends BaseEntity {
 
   @Column()
   updatedAt: Date;
+
+  @ManyToOne(() => User, user => user.tasks)
+  user: User;
 
   @BeforeInsert()
   initiateDate() {
