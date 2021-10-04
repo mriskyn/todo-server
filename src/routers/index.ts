@@ -9,7 +9,7 @@ import {
 import { login, register } from '../controllers/UserController';
 import { authorization } from '../middlewares/auth';
 import { handleValidationError } from '../middlewares/handleError';
-import { checkLogin, checkRegister } from '../validator/user';
+import { checkLogin, checkRegister, checkTask } from '../validator/user';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post('/login', checkLogin(), handleValidationError, login);
 
 router.get('/task', readTasks);
 router.use(authorization);
-router.post('/task', createTask);
+router.post('/task', checkTask(), handleValidationError, createTask);
 router.get('/task/:id', readTask);
 router.patch('/task/:id', updateTask);
 router.delete('/task/:id', deleteTask);

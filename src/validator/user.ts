@@ -23,11 +23,19 @@ function checkRegister() {
   ];
 }
 
-function checkLogin(){
+function checkLogin() {
   return [
-    body('username').isLength({min: 1}).withMessage('Username is Empty'),
-    body('password').isLength({min: 1}).withMessage('Password is Empty'),
-  ]
+    body('username').isLength({ min: 1 }).withMessage('Username is Empty'),
+    body('password').isLength({ min: 1 }).withMessage('Password is Empty'),
+  ];
 }
 
-export { checkRegister, checkLogin };
+function checkTask() {
+  return [
+    body('name')
+      .exists({ checkFalsy: true, checkNull: true })
+      .withMessage('Task name is empty'),
+  ];
+}
+
+export { checkRegister, checkLogin, checkTask };
