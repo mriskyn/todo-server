@@ -34,7 +34,15 @@ async function createTask(req: Request, res: Response): Promise<Response> {
 }
 
 async function updateTask(req: Request, res: Response): Promise<Response> {
-  return res.json('update');
+  const { id } = req.params;
+  const inputs = req.body;
+
+  try {
+    const updatedTask = await Task.update({ id: parseInt(id) }, inputs);
+    return res.json(updatedTask);
+  } catch (err) {
+    return res.json({ err });
+  }
 }
 
 async function deleteTask(req: Request, res: Response): Promise<Response> {
