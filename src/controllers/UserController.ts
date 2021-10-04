@@ -15,13 +15,11 @@ async function register(req: Request, res: Response): Promise<Response> {
 
     return res.status(201).json(user);
   } catch (error) {
-    // if (error.constraint.includes('UQ')) {
-    //   return res
-    //     .json({
-    //       msg: error.detail,
-    //     })
-    //     .status(400);
-    // }
+    if (error.constraint) {
+      return res
+        .status(422)
+        .json({ message: error.message, detail: error.detail });
+    }
     return res.status(500).json(error);
   }
 }
